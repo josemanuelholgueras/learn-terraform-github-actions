@@ -1,25 +1,16 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-    random = {
-      source = "hashicorp/random"
-    }
-  }
-
-  backend "remote" {
-    hostname = "terraform.multicloud.telefonica.com"
-    organization = "Telefonica"
-
-    workspaces {
-      name = "gh-actions-demo"
-    }
-  }
+provider "aws" {
+  region = "us-east-1"
 }
 
-provider "aws" {
-  region = "us-west-2"
+master
+  backend "remote" {
+    organization = "Telefonica"
+    hostname = "terraform.multicloud.telefonica.com"
+
+    workspaces {
+      name = "test-backend"
+    }
+  }
 }
 
 provider "random" {}
@@ -33,7 +24,7 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "Hello, World" > index.html
+              echo "Hello, Josema" > index.html
               nohup busybox httpd -f -p 8080 &
               EOF
 }
