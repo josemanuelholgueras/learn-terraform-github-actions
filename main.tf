@@ -1,15 +1,17 @@
+provider "aws" {
+  region = var.region
+}
 
-# The configuration for the `remote` backend.
-terraform {
-  backend "remote" {
-    # The name of your Terraform Cloud organization.
-    organization = "Telefonica"
-    hostname = "terraform.multicloud.telefonica.com"
 
-    # The name of the Terraform Cloud workspace to store Terraform state files in.
-    workspaces {
-      name = "example-workspace"
-    }
+resource "aws_vpc" "EjemploAPI_TF" {
+  
+  # IP Range for the VPC
+  cidr_block = "111.11.0.0/16"
+  
+  # Enabling automatic hostname assigning
+  enable_dns_hostnames = true
+  tags = {
+    Name = "EjemploAPI_TF"
   }
 }
 
